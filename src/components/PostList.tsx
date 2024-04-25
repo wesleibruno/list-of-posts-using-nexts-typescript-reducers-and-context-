@@ -20,6 +20,11 @@ const PostList = () => {
   };
 
   const handleEditSave = (id: number) => {
+    // Verifica se o título ou o corpo estão vazios
+    if (editedTitle.trim() === "" || editedBody.trim() === "") {
+      alert("Por favor, preencha tanto o título quanto o corpo do post.");
+      return; // Retorna sem salvar se algum estiver vazio
+    }
     postCtx?.dispatch({
       type: "edit",
       payload: { id, title: editedTitle, body: editedBody },
@@ -36,12 +41,14 @@ const PostList = () => {
           {editingPost === item.id ? (
             <div className=" max-w-xl flex flex-col gap-3 my-1 border border-dotted p-3 text-black">
               <input
+                placeholder="Digite um Titulo"
                 className="p-2"
                 type="text"
                 value={editedTitle}
                 onChange={(e) => setEditedTitle(e.target.value)}
               />
               <textarea
+                placeholder="Digite um corpo"
                 className="h-24"
                 value={editedBody}
                 onChange={(e) => setEditedBody(e.target.value)}
